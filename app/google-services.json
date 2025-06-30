@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1012272783451",
+    "project_id": "routeane",
+    "storage_bucket": "routeane.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012272783451:android:eec4c679130544ef025f7e",
+        "android_client_info": {
+          "package_name": "com.silwek.routeane"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkSKFciOjW-TS8yvZSuK2RDcf_Fg6Opfo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
