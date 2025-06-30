@@ -9,5 +9,5 @@
     <color name="secondary_color">#5893ee</color>
     <color name="secondary_color_dark">#3e4398</color>
     <color name="secondary_color_light">#9cc8f8</color>
-    <color name="colored_background">#effbe8</color>
+    <color name="background_color">#effbe8</color>
 </resources>

@@ -1,21 +1,43 @@
 package com.silwek.routeane
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.appcompat.app.AppCompatActivity
-import com.silwek.routeane.databinding.ActivityMainBinding
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.MaterialTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.silwek.routeane.data.DatabaseProvider
+import com.silwek.routeane.data.repositories.PlannerRepository
+import com.silwek.routeane.ui.theme.RouteaneTheme
+import com.silwek.routeane.ui.theme.SystemBarColorEffect
+import com.silwek.routeane.ui.todayplan.TodayPlanViewModel
+import com.silwek.routeane.ui.todayplan.TodayScreenWithViewModel
+import com.silwek.routeane.ui.todayplan.TodayViewModelFactory
 
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        val context = this@MainActivity
+        val database = DatabaseProvider.getDatabase(context)
+        val repository = PlannerRepository(database)
+        setContent {
+            RouteaneTheme {
+                val viewModel: TodayPlanViewModel = viewModel(
+                    factory = TodayViewModelFactory(repository)
+                )
+                SystemBarColorEffect()
+                TodayScreenWithViewModel(viewModel, dayOfWeek = 1, modeId = 2)
+            }
+        }
+    }
+}
+/*
 class MainActivity : AppCompatActivity() {
 
+
+    /*
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
@@ -84,4 +106,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+
 }
+     */

@@ -5,4 +5,7 @@ plugins {
     alias(libs.plugins.google.firebase.appdistribution) apply false
     alias(libs.plugins.google.gms.google.services) apply false
     alias(libs.plugins.ktlint ) apply false
+    alias (libs.plugins.kotlin.ksp ) apply false
+    alias(libs.plugins.compose.compiler) apply false
+
 }
