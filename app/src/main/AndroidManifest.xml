@@ -11,13 +11,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Routeane">
+        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:resizeableActivity="true"
-            android:theme="@style/Theme.Routeane.NoActionBar"
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
             tools:targetApi="24">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
