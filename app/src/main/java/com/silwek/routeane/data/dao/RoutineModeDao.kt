@@ -24,4 +24,14 @@ interface RoutineModeDao {
 
     @Query("SELECT * FROM routine_modes WHERE id = :id")
     suspend fun getModeById(id: Int): RoutineMode?
+
+
+    @Query("UPDATE routine_modes SET name = :newName WHERE id = :modeId")
+    suspend fun updateModeName(modeId: Int, newName: String)
+
+    @Query("UPDATE routine_modes SET iconName = :iconName WHERE id = :modeId")
+    suspend fun updateModeIcon(modeId: Int, iconName: String)
+
+    @Query("SELECT COUNT(id) FROM routine_modes")
+    suspend fun getModesCount(): Int
 }

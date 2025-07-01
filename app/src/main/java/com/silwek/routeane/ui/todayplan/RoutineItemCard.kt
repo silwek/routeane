@@ -1,7 +1,6 @@
 package com.silwek.routeane.ui.todayplan
 
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,15 +16,14 @@ import com.silwek.routeane.data.entities.RoutineDayAssignmentWithItem
 import com.silwek.routeane.ui.theme.RouteaneTheme
 
 @Composable
-fun RoutineItemCard(assignment: RoutineDayAssignmentWithItem) {
+fun RoutineItemCard(assignment: RoutineDayAssignmentWithItem, modifier: Modifier = Modifier) {
     Card(
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp)
     ) {
         Column(
             Modifier

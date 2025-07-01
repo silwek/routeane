@@ -1,25 +1,23 @@
 <resources>
     <string name="app_name">Routeane</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="nav_todayplan">Aujourd\'hui</string>
+    <string name="nav_modes">Mes modes</string>
 
-    <string name="menu_transform">Transform</string>
-    <string name="menu_reflow">Reflow</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_settings">Settings</string>
 
-    <string name="lorem_ipsum_title">Lorem Ipsum"</string>
-    <string name="lorem_ipsum">Lorem Ipsum is simply placeholder text of the printing and
-        typesetting industry. Lorem Ipsum has been the industry\'s standard placeholder text ever
-        since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-        type specimen book"
-    </string>
-    <string name="fab_content_description">Represents a view to invoke an action</string>
-    <string name="image_view_item_transform_content_description">Represents an image view in the
-        item
-    </string>
+    <string name="default_routine_mode_name">Routine</string>
+    <string name="icon_picker_title">Choisir une icone</string>
+    <string name="add_mode_action">Ajouter un mode</string>
+    <string name="add_mode_confirm">Ajouter</string>
+    <string name="mode_explanation_1">Adaptez votre planning !</string>
+    <string name="mode_explanation_2">Quand vous êtes malade, en vacances ou encore en pleine forme, votre organisation est différente. Créez des modes qui correspondent à votre situation et à vos besoins.</string>
+    <string name="add_mode_title">Ajouter un nouveau mode</string>
+    <string name="add_mode_desc">Dans quel contexte utiliserez-vous ce nouveau mode ?</string>
+    <string name="add_mode_placeholder">Nom du mode</string>
+    <string name="validate">Valider</string>
+    <string name="cancel">Annuler</string>
+    <string name="delete_mode_action">Supprimer le mode %s</string>
+    <string name="delete_mode_title">Supprimer le mode %s?</string>
+    <string name="delete_mode_warning">Cette action est irréversible.</string>
+    <string name="delete_mode_confirm">Supprimer</string>
+
 </resources>

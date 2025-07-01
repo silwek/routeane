@@ -11,7 +11,7 @@ import com.silwek.routeane.data.entities.RoutineMode
 
 @Database(
     entities = [RoutineItem::class, RoutineMode::class, RoutineDayAssignment::class],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {

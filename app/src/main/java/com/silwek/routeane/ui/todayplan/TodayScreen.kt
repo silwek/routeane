@@ -1,5 +1,7 @@
 package com.silwek.routeane.ui.todayplan
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,17 +16,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.silwek.routeane.data.entities.RoutineDayAssignmentWithItem
+import com.silwek.routeane.ui.components.ModeChipsSelector
+import com.silwek.routeane.ui.theme.Dimens
 import com.silwek.routeane.ui.theme.RouteaneTheme
 
 @Composable
 fun TodayScreen(assignments: List<RoutineDayAssignmentWithItem>) {
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(WindowInsets.statusBars.asPaddingValues())
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(Dimens.CardVerticalSpacing)
     ) {
         items(assignments) { assignment ->
-            RoutineItemCard(assignment)
+            RoutineItemCard(
+                assignment,
+                Modifier.padding(horizontal = Dimens.ScreenHorizontalPadding)
+            )
         }
     }
 }
@@ -32,15 +39,33 @@ fun TodayScreen(assignments: List<RoutineDayAssignmentWithItem>) {
 @Composable
 fun TodayScreenWithViewModel(
     viewModel: TodayPlanViewModel,
-    dayOfWeek: Int,
-    modeId: Int
+    dayOfWeek: Int? = null,
+    modeId: Int? = null
 ) {
     LaunchedEffect(Unit) {
-        viewModel.loadAssignments(dayOfWeek, modeId)
+        if (dayOfWeek != null && modeId != null) {
+            viewModel.loadAssignments(dayOfWeek, modeId)
+        } else {
+            viewModel.loadAssignmentsForMode()
+        }
     }
 
     val uiState by viewModel.uiState.collectAsState()
-    TodayScreen(assignments = uiState.assignments)
+    val mode = uiState.selectedMode ?: uiState.modes.firstOrNull()
+
+    Column(
+        modifier = Modifier
+            .padding(paddingValues = WindowInsets.statusBars.asPaddingValues())
+    ) {
+        if (mode != null)
+            ModeChipsSelector(
+                modes = uiState.modes,
+                selectedMode = mode,
+                onModeSelected = viewModel::onModeSelected
+            )
+
+        TodayScreen(assignments = uiState.assignments)
+    }
 }
 
 @Preview(showBackground = true)

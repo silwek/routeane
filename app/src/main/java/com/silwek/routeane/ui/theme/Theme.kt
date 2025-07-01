@@ -18,10 +18,11 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 
 private val LightColors = lightColorScheme(
-    primary = Primary,
+    primary = PrimaryDark,
     primaryContainer = PrimaryLight,
     onPrimary = Color.White,
-    secondary = Secondary,
+    onPrimaryContainer = SecondaryDark,
+    secondary = SecondaryDark,
     onSecondary = Color.White,
     background = BackgroundLight,
     onBackground = Color.Black,
@@ -31,6 +32,7 @@ private val DarkColors = darkColorScheme(
     primary = PrimaryLight,
     primaryContainer = PrimaryDark,
     onPrimary = Color.Black,
+    onPrimaryContainer = Color.White,
     secondary = SecondaryLight,
     onSecondary = Color.Black,
     background = Color(0xFF121212),
@@ -49,7 +51,10 @@ val Typography = Typography(
         fontSize = 16.sp
     ),
     titleLarge = androidx.compose.ui.text.TextStyle(
-        fontSize = 20.sp
+        fontSize = 20.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+    ),
+    titleMedium = androidx.compose.ui.text.TextStyle(
+        fontSize = 18.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
     ),
     labelSmall = androidx.compose.ui.text.TextStyle(
         fontSize = 12.sp

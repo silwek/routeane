@@ -19,6 +19,28 @@ class PlannerRepository(
 
     fun getAllModesFlow(): Flow<List<RoutineMode>> = modeDao.getAllModes()
 
-    fun getAssignmentsForDayAndModeFlow(dayOfWeek: Int, modeId: Int): Flow<List<RoutineDayAssignmentWithItem>> =
+    fun getAssignmentsForDayAndModeFlow(
+        dayOfWeek: Int,
+        modeId: Int
+    ): Flow<List<RoutineDayAssignmentWithItem>> =
         assignmentDao.getAssignmentsWithItemsForDayAndModeFlow(dayOfWeek, modeId)
+
+    suspend fun insertMode(mode: RoutineMode) {
+        modeDao.insert(mode)
+    }
+
+    suspend fun updateModeName(modeId: Int, newName: String) {
+        modeDao.updateModeName(modeId, newName)
+    }
+    suspend fun updateModeIcon(modeId: Int, newIcon: String) {
+        modeDao.updateModeIcon(modeId, newIcon)
+    }
+
+    suspend fun deleteMode(mode: RoutineMode) {
+        modeDao.delete(mode)
+    }
+
+    suspend fun hasData(): Boolean {
+        return modeDao.getModesCount() > 0
+    }
 }

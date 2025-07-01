@@ -12,7 +12,7 @@ suspend fun populateDatabase(db: AppDatabase) {
 
     // Insert Modes
     val modeIds = listOf(
-        modeDao.insert(RoutineMode(name = "Routine"))
+        modeDao.insert(RoutineMode(name = "Routine", iconName = "ic_lib_calendar"))
             .also { Timber.d("Inserted item Routine id: $it") },
         modeDao.insert(RoutineMode(name = "Holidays")),
         modeDao.insert(RoutineMode(name = "Sick days"))
