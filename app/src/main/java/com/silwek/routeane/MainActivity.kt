@@ -11,6 +11,7 @@ import com.silwek.routeane.data.populateDatabase
 import com.silwek.routeane.data.repositories.PlannerRepository
 import com.silwek.routeane.ui.main.RouteaneApp
 import com.silwek.routeane.ui.mode.ModesViewModel
+import com.silwek.routeane.ui.routines.RoutineItemsViewModel
 import com.silwek.routeane.ui.theme.RouteaneTheme
 import com.silwek.routeane.ui.theme.SystemBarColorEffect
 import com.silwek.routeane.ui.todayplan.TodayPlanViewModel
@@ -27,19 +28,21 @@ class MainActivity : ComponentActivity() {
         val repository = PlannerRepository(database)
         val todayViewModel = TodayPlanViewModel(repository, preferences)
         val modesViewModel = ModesViewModel(repository)
+        val routineItemsViewModel = RoutineItemsViewModel(repository, preferences)
 
-            lifecycleScope.launch {
-                if(!repository.hasData()) {
+        lifecycleScope.launch {
+            if (!repository.hasData()) {
                 populateDatabase(database)
-                }
             }
+        }
 
         setContent {
             RouteaneTheme {
                 SystemBarColorEffect()
                 RouteaneApp(
                     todayViewModel = todayViewModel,
-                    modesViewModel = modesViewModel
+                    modesViewModel = modesViewModel,
+                    routineItemsViewModel = routineItemsViewModel
                 )
             }
         }

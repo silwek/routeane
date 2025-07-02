@@ -2,6 +2,7 @@
     <string name="app_name">Routeane</string>
     <string name="nav_todayplan">Aujourd\'hui</string>
     <string name="nav_modes">Mes modes</string>
+    <string name="nav_routines">Mes routines</string>
 
 
     <string name="default_routine_mode_name">Routine</string>

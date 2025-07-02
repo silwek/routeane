@@ -34,22 +34,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.silwek.routeane.R
 import com.silwek.routeane.data.entities.RoutineMode
 import com.silwek.routeane.ui.components.IconPickerDialog
 import com.silwek.routeane.ui.components.RouteaneIcons
+import com.silwek.routeane.ui.theme.RouteaneTheme
 
 
 @Composable
-fun ModesScreen(viewModel: ModesViewModel) {
-    val modes by viewModel.modes.collectAsState()
-    var editingModeId by remember { mutableStateOf<Int?>(null) }
+fun ModesScreen(
+    modes: List<RoutineMode>,
+    currentMode: RoutineMode?,
+    onAddMode: (RoutineMode) -> Unit,
+    onEditMode: (RoutineMode?) -> Unit,
+    onUpdateName: (String) -> Unit,
+    onUpdateIcon: (String) -> Unit,
+    onDeleteConfirm: () -> Unit
+) {
     var editingText by remember { mutableStateOf("") }
-    var modeToDelete by remember { mutableStateOf<RoutineMode?>(null) }
+    var showDelete by remember { mutableStateOf(false) }
     var showPicker by remember { mutableStateOf(false) }
-    var modeBeingEdited by remember { mutableStateOf<RoutineMode?>(null) }
     var showAddDialog by remember { mutableStateOf(false) }
+    val isEditMode = (currentMode != null)
+    val isEditingText = isEditMode && !showPicker
 
     Scaffold(
         floatingActionButton = {
@@ -104,7 +113,8 @@ fun ModesScreen(viewModel: ModesViewModel) {
                     val dismissState = rememberSwipeToDismissBoxState(
                         confirmValueChange = { value ->
                             if (value == SwipeToDismissBoxValue.EndToStart || value == SwipeToDismissBoxValue.StartToEnd) {
-                                modeToDelete = mode
+                                onEditMode(mode)
+                                showDelete = true
                             }
                             false
                         }
@@ -140,54 +150,58 @@ fun ModesScreen(viewModel: ModesViewModel) {
                     ) {
                         ModeItemCard(
                             mode = mode,
-                            isEditing = (editingModeId == mode.id),
+                            isEditing = isEditingText,
                             editingText = editingText,
                             onEditingTextChange = { editingText = it },
                             onClickEdit = {
-                                editingModeId = mode.id
+                                onEditMode(mode)
                                 editingText = mode.name
                             },
                             onClickIconEdit = {
-                                modeBeingEdited = mode
+                                onEditMode(mode)
                                 showPicker = true
                             },
                             onSave = {
-                                viewModel.updateModeName(mode.id, editingText)
-                                editingModeId = null
+                                onUpdateName(editingText)
                             },
-                            onDeleteClicked = { modeToDelete = mode }
-
+                            onDeleteClicked = {
+                                onEditMode(mode)
+                                showDelete = true
+                            }
                         )
                     }
                 }
             }
 
-            if (modeToDelete != null) {
+            if (showDelete && isEditMode) {
                 ConfirmDeleteDialog(
-                    mode = modeToDelete!!,
+                    mode = currentMode,
                     onConfirm = {
-                        viewModel.deleteMode(modeToDelete!!)
-                        modeToDelete = null
+                        onDeleteConfirm()
+                        showDelete = false
                     },
-                    onDismiss = { modeToDelete = null }
+                    onDismiss = {
+                        onEditMode(null)
+                        showDelete = false
+                    }
                 )
             }
-            if (showPicker && modeBeingEdited != null) {
+            if (showPicker && isEditMode) {
                 IconPickerDialog(
                     icons = RouteaneIcons.allIcons,
                     onIconSelected = { selectedIcon ->
-                        viewModel.updateModeIcon(modeBeingEdited!!.id, selectedIcon)
+                        onUpdateIcon(selectedIcon)
                     },
                     onDismiss = {
                         showPicker = false
-                        modeBeingEdited = null
+                        onEditMode(null)
                     }
                 )
             }
             if (showAddDialog) {
                 AddModeDialog(
                     onSubmit = { mode ->
-                        viewModel.insertMode(mode)
+                        onAddMode(mode)
                         showAddDialog = false
                     },
                     onDismiss = {
@@ -196,5 +210,53 @@ fun ModesScreen(viewModel: ModesViewModel) {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun ModesScreenWithViewModel(viewModel: ModesViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+    val modes = uiState.modes
+    val modeBeingEdited = uiState.modeBeingEdited
+    val isEditMode = (modeBeingEdited != null)
+    val modeId = modeBeingEdited?.id ?: -1
+
+    ModesScreen(
+        modes = modes,
+        currentMode = modeBeingEdited,
+        onAddMode = { mode ->
+            viewModel.insertMode(mode)
+        },
+        onEditMode = { mode ->
+            viewModel.onUpdatingMode(mode)
+        },
+        onUpdateName = { name ->
+            if (isEditMode)
+                viewModel.updateModeName(modeId, name)
+            viewModel.onUpdatingMode(null)
+        },
+        onUpdateIcon = { selectedIcon ->
+            if (isEditMode)
+                viewModel.updateModeIcon(modeId, selectedIcon)
+            viewModel.onUpdatingMode(null)
+        },
+        onDeleteConfirm = {
+            if (isEditMode)
+                viewModel.deleteMode(modeBeingEdited)
+        }
+    )
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun ModesScreenPreview() {
+    val modes = listOf(
+        RoutineMode(1, "Routine", "ic_lib_calendar"),
+        RoutineMode(2, "Holidays", "ic_lib_swimming"),
+        RoutineMode(3, "Sick days", "ic_lib_none")
+    )
+    RouteaneTheme {
+        ModesScreen(modes, null, {}, {}, { }, { }, {})
     }
 }
