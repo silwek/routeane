@@ -20,5 +20,17 @@
     <string name="delete_mode_title">Supprimer le mode %s?</string>
     <string name="delete_mode_warning">Cette action est irréversible.</string>
     <string name="delete_mode_confirm">Supprimer</string>
+    <string name="everyday">Tous les jours</string>
+    <string name="add_routine_action">Ajouter une routine</string>
+    <string name="add_routine_assignment_action">Ajouter à un planning</string>
+    <string name="no_assignments_for_day">Pas prévu ce jour</string>
+    <string name="delete_routine_action">Supprimer la routine \"%s\"</string>
+    <string name="delete_routine_title">Supprimer la routine \"%s\"?</string>
+    <string name="delete_routine_warning">Cette action est irréversible.</string>
+    <string name="delete_routine_confirm">Supprimer</string>
+    <string name="routine_duration_min">%d minutes</string>
+    <string name="edit_routine_action">Modifier la routine</string>
+    <string name="clear_all_assignments">Vider tous les plannings</string>
+    <string name="delete_mode_assignement">Supprimer du mode ?</string>
 
 </resources>

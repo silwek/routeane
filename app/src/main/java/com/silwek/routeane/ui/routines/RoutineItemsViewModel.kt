@@ -29,4 +29,16 @@ class RoutineItemsViewModel(
             }
         }
     }
+
+    fun addRoutine(name: String, duration: Int) {
+        viewModelScope.launch {
+            repository.insertRoutineItem(name, duration)
+        }
+    }
+
+    fun deleteRoutine(id: Int) {
+        viewModelScope.launch {
+            repository.deleteRoutineItem(id)
+        }
+    }
 }

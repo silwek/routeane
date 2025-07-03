@@ -72,9 +72,9 @@ fun TodayScreenWithViewModel(
 @Composable
 fun TodayScreenPreview() {
     val fakeAssignments = listOf(
-        RoutineDayAssignmentWithItem(1, -1, 1, 1, "Make bed", 5),
-        RoutineDayAssignmentWithItem(2, -1, 1, 2, "Brush teeth", 3),
-        RoutineDayAssignmentWithItem(3, 1, 1, 3, "Yoga", 20)
+        RoutineDayAssignmentWithItem(1, -1, 1, 1, "Make bed", 5, "ic_lib_calendar"),
+        RoutineDayAssignmentWithItem(2, -1, 1, 2, "Brush teeth", 3, "ic_lib_calendar"),
+        RoutineDayAssignmentWithItem(3, 1, 1, 3, "Yoga", 20, "ic_lib_calendar")
     )
     RouteaneTheme {
         TodayScreen(fakeAssignments)

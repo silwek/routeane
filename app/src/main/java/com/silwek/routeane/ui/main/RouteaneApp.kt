@@ -14,12 +14,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.silwek.routeane.R
-import com.silwek.routeane.ui.mode.ModesScreen
+import com.silwek.routeane.ui.routinedetail.RoutineDetailViewModel
+import com.silwek.routeane.ui.routinedetail.RoutineDetailScreenWithViewModel
 import com.silwek.routeane.ui.mode.ModesScreenPreview
 import com.silwek.routeane.ui.mode.ModesScreenWithViewModel
 import com.silwek.routeane.ui.mode.ModesViewModel
@@ -27,7 +30,6 @@ import com.silwek.routeane.ui.routines.RoutineItemsViewModel
 import com.silwek.routeane.ui.routines.RoutinesScreenPreview
 import com.silwek.routeane.ui.routines.RoutinesScreenWithViewModel
 import com.silwek.routeane.ui.todayplan.TodayPlanViewModel
-import com.silwek.routeane.ui.todayplan.TodayScreen
 import com.silwek.routeane.ui.todayplan.TodayScreenPreview
 import com.silwek.routeane.ui.todayplan.TodayScreenWithViewModel
 
@@ -35,7 +37,8 @@ import com.silwek.routeane.ui.todayplan.TodayScreenWithViewModel
 fun RouteaneApp(
     todayViewModel: TodayPlanViewModel,
     modesViewModel: ModesViewModel,
-    routineItemsViewModel: RoutineItemsViewModel
+    routineItemsViewModel: RoutineItemsViewModel,
+    routineDetailViewModel: RoutineDetailViewModel
 ) {
     val navController = rememberNavController()
     val currentBackStack by navController.currentBackStackEntryAsState()
@@ -92,7 +95,26 @@ fun RouteaneApp(
                 ModesScreenWithViewModel(viewModel = modesViewModel)
             }
             composable("routines") {
-                RoutinesScreenWithViewModel(viewModel = routineItemsViewModel)
+                RoutinesScreenWithViewModel(
+                    viewModel = routineItemsViewModel,
+                    onNavigateToAssignments = { itemId ->
+                        navController.navigate("assignments/$itemId")
+                    })
+            }
+
+            composable(
+                "assignments/{itemId}",
+                arguments = listOf(
+                    navArgument("itemId") { type = NavType.IntType }
+                )
+            ) { backStackEntry ->
+                val itemId = backStackEntry.arguments?.getInt("itemId") ?: 0
+                RoutineDetailScreenWithViewModel(
+                    viewModel = routineDetailViewModel,
+                    modesViewModel = modesViewModel,
+                    itemId = itemId,
+                    onBack = { navController.popBackStack() }
+                )
             }
         }
     }

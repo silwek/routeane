@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.silwek.routeane.R
 import com.silwek.routeane.data.entities.RoutineMode
+import com.silwek.routeane.ui.components.ConfirmDeleteDialog
 import com.silwek.routeane.ui.components.IconPickerDialog
 import com.silwek.routeane.ui.components.RouteaneIcons
 import com.silwek.routeane.ui.theme.RouteaneTheme
@@ -175,7 +176,7 @@ fun ModesScreen(
 
             if (showDelete && isEditMode) {
                 ConfirmDeleteDialog(
-                    mode = currentMode,
+                    title = stringResource(R.string.delete_mode_title, currentMode.name),
                     onConfirm = {
                         onDeleteConfirm()
                         showDelete = false

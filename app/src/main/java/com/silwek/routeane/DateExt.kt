@@ -3,7 +3,9 @@ package com.silwek.routeane
 import android.os.Build
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.format.TextStyle
 import java.util.Calendar
+import java.util.Locale
 
 fun getTodayDayOfWeek(): Int {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -33,5 +35,38 @@ fun getTodayDayOfWeek(): Int {
             else -> 1 // fallback
         }
     }
+}
 
+fun getDayName(dayOfWeek: Int, everyDayStr: String): String {
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val dayOfWeekLD = when (dayOfWeek) {
+            1 -> DayOfWeek.MONDAY
+            2 -> DayOfWeek.TUESDAY
+            3 -> DayOfWeek.WEDNESDAY
+            4 -> DayOfWeek.THURSDAY
+            5 -> DayOfWeek.FRIDAY
+            6 -> DayOfWeek.SATURDAY
+            7 -> DayOfWeek.SUNDAY
+            else -> null
+        }
+        return dayOfWeekLD?.getDisplayName(TextStyle.FULL, Locale.getDefault()) ?: everyDayStr
+    } else {
+        val calendar = Calendar.getInstance()
+        val dayOfWeekCal = when (dayOfWeek) {
+            1 -> Calendar.MONDAY
+            2 -> Calendar.TUESDAY
+            3 -> Calendar.WEDNESDAY
+            4 -> Calendar.THURSDAY
+            5 -> Calendar.FRIDAY
+            6 -> Calendar.SATURDAY
+            7 -> Calendar.SUNDAY
+            else -> null
+        }
+        if (dayOfWeekCal == null) return everyDayStr
+        calendar.set(Calendar.DAY_OF_WEEK, dayOfWeekCal)
+        return calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+            ?: "?"
+
+    }
 }

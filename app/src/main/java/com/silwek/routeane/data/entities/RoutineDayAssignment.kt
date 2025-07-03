@@ -24,9 +24,9 @@ import androidx.room.PrimaryKey
     indices = [Index("routineItemId"), Index("modeId")]
 )
 data class RoutineDayAssignment(
-    @PrimaryKey(autoGenerate = true) val id: Int = EVERYDAY,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val routineItemId: Int,
-    val dayOfWeek: Int,
+    val dayOfWeek: Int = EVERYDAY,
     val modeId: Int
 ) {
     companion object {
@@ -47,5 +47,14 @@ data class RoutineDayAssignmentWithItem(
     val modeId: Int,
     val itemId: Int,
     val itemName: String,
-    val itemDefaultDuration: Int?
+    val itemDefaultDuration: Int?,
+    val itemIconName: String,
+)
+
+data class AssignmentForDay(
+    val assignmentId: Int,
+    val dayOfWeek: Int,
+    val modeId: Int,
+    val modeName: String,
+    val iconName: String
 )

@@ -1,4 +1,4 @@
-package com.silwek.routeane.ui.mode
+package com.silwek.routeane.ui.components
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
@@ -8,12 +8,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.silwek.routeane.R
-import com.silwek.routeane.data.entities.RoutineMode
-import com.silwek.routeane.ui.components.DialogTitle
 
 @Composable
 fun ConfirmDeleteDialog(
-    mode: RoutineMode,
+    title: String,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -35,7 +33,7 @@ fun ConfirmDeleteDialog(
                 Text(stringResource(R.string.cancel))
             }
         },
-        title = { DialogTitle(stringResource(R.string.delete_mode_title, mode.name)) },
+        title = { DialogTitle(title) },
         text = { Text(stringResource(R.string.delete_mode_warning)) }
     )
 }

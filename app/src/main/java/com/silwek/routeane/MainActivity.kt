@@ -9,6 +9,7 @@ import com.silwek.routeane.data.AppPreferences
 import com.silwek.routeane.data.DatabaseProvider
 import com.silwek.routeane.data.populateDatabase
 import com.silwek.routeane.data.repositories.PlannerRepository
+import com.silwek.routeane.ui.routinedetail.RoutineDetailViewModel
 import com.silwek.routeane.ui.main.RouteaneApp
 import com.silwek.routeane.ui.mode.ModesViewModel
 import com.silwek.routeane.ui.routines.RoutineItemsViewModel
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
         val todayViewModel = TodayPlanViewModel(repository, preferences)
         val modesViewModel = ModesViewModel(repository)
         val routineItemsViewModel = RoutineItemsViewModel(repository, preferences)
+        val routineDetailViewModel = RoutineDetailViewModel(repository)
 
         lifecycleScope.launch {
             if (!repository.hasData()) {
@@ -42,7 +44,8 @@ class MainActivity : ComponentActivity() {
                 RouteaneApp(
                     todayViewModel = todayViewModel,
                     modesViewModel = modesViewModel,
-                    routineItemsViewModel = routineItemsViewModel
+                    routineItemsViewModel = routineItemsViewModel,
+                    routineDetailViewModel = routineDetailViewModel
                 )
             }
         }

@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.silwek.routeane.data.entities.RoutineItem
+import com.silwek.routeane.ui.components.RouteaneIcons
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,6 +16,9 @@ interface RoutineItemDao {
 
     @Update
     suspend fun update(item: RoutineItem)
+
+    @Query("UPDATE routine_items SET iconName = :iconName WHERE id = :id")
+    suspend fun updateIcon(id: Int, iconName: String)
 
     @Delete
     suspend fun delete(item: RoutineItem)
